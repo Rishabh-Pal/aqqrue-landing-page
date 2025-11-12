@@ -1,6 +1,6 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion, Variants } from 'framer-motion';
 import { useInView } from 'framer-motion';
 import { useRef } from 'react';
 
@@ -28,7 +28,7 @@ export function AnimatedText({ text, className = '', delay = 0, type = 'word' }:
 
   const elements = getElements();
 
-  const container = {
+  const container: Variants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
@@ -39,7 +39,7 @@ export function AnimatedText({ text, className = '', delay = 0, type = 'word' }:
     },
   };
 
-  const child = {
+  const child: Variants = {
     hidden: {
       opacity: 0,
       y: 20,
@@ -51,7 +51,7 @@ export function AnimatedText({ text, className = '', delay = 0, type = 'word' }:
       filter: 'blur(0px)',
       transition: {
         duration: 0.5,
-        ease: [0.25, 0.4, 0.25, 1],
+        ease: [0.25, 0.4, 0.25, 1] as [number, number, number, number],
       },
     },
   };
@@ -85,10 +85,10 @@ interface GradientTextProps {
   gradient?: string;
 }
 
-export function GradientText({ 
-  children, 
-  className = '', 
-  gradient = 'from-emerald-400 via-green-400 to-emerald-500' 
+export function GradientText({
+  children,
+  className = '',
+  gradient = 'from-emerald-400 via-green-400 to-emerald-500'
 }: GradientTextProps) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
@@ -99,7 +99,7 @@ export function GradientText({
       className={`text-transparent bg-clip-text bg-gradient-to-r ${gradient} ${className}`}
       initial={{ opacity: 0, y: 20 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.8, ease: [0.25, 0.4, 0.25, 1] }}
+      transition={{ duration: 0.8, ease: [0.25, 0.4, 0.25, 1] as [number, number, number, number] }}
     >
       {children}
     </motion.span>
@@ -116,7 +116,7 @@ export function RevealText({ children, className = '', delay = 0 }: { children: 
       <motion.div
         initial={{ y: '100%' }}
         animate={isInView ? { y: 0 } : {}}
-        transition={{ duration: 0.8, delay, ease: [0.25, 0.4, 0.25, 1] }}
+        transition={{ duration: 0.8, delay, ease: [0.25, 0.4, 0.25, 1] as [number, number, number, number] }}
         className={className}
       >
         {children}
@@ -163,7 +163,7 @@ export function ScaleText({ children, className = '', delay = 0 }: { children: R
       className={className}
       initial={{ scale: 0.8, opacity: 0 }}
       animate={isInView ? { scale: 1, opacity: 1 } : {}}
-      transition={{ duration: 0.6, delay, ease: [0.25, 0.4, 0.25, 1] }}
+      transition={{ duration: 0.6, delay, ease: [0.25, 0.4, 0.25, 1] as [number, number, number, number] }}
     >
       {children}
     </motion.div>
