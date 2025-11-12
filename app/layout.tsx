@@ -27,9 +27,27 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning className="hydrated">
+      <head>
+        {/* Prevent FOUC by ensuring CSS loads before render */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                // Add hydrated class immediately
+                document.documentElement.classList.add('hydrated');
+                // Set background color immediately to prevent white flash
+                document.documentElement.style.backgroundColor = '#0a0a0a';
+                document.body.style.backgroundColor = '#0a0a0a';
+              })();
+            `,
+          }}
+        />
+        {/* Preload critical CSS */}
+        <link rel="preload" href="/globals.css" as="style" />
+      </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-black`}
         suppressHydrationWarning
       >
         {children}
